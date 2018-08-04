@@ -3,7 +3,7 @@ Dynamic Club Integrate System
 
 # Module(s)
 ## Authentication
-* Auth0 integrate
+* Google OAuth2 integrate
 ## Members Management
 ## Finance Management
 ## Inventory Management
