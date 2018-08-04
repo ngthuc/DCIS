@@ -9,8 +9,8 @@ class Auth extends CI_Controller {
 				parent::__construct();
         $this->auth0 = new Auth0([
           'domain' => 'ngthuc.auth0.com',
-          'client_id' => 'rYuzanR_2s25Wpy6wXqgnJvgHLy-njY0',
-          'client_secret' => 'wMmawuSq2b_scPCBBIhOUsJYThRZzKGqITr_J4WPvYG4Cgznacaef1ETl1mkIKCQ',
+          'client_id' => 'GdLAE1nvTAR1ngGyOimVQbU9qvjoRFnE',
+          'client_secret' => 'ikieGH4gmNq1olDK0FSqC149D2-6OElURwc6hsyRi3XVGdrPmX4bPoxhWgRRJTJS',
           'redirect_uri' => base_url('auth/callback'),
           'audience' => 'https://ngthuc.auth0.com/userinfo',
           'responseType' => 'code',
