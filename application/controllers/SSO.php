@@ -17,7 +17,7 @@ class SSO extends CI_Controller {
           'domain' => 'ngthuc.auth0.com',
           'client_id' => 'rYuzanR_2s25Wpy6wXqgnJvgHLy-njY0',
           'client_secret' => 'wMmawuSq2b_scPCBBIhOUsJYThRZzKGqITr_J4WPvYG4Cgznacaef1ETl1mkIKCQ',
-          'redirect_uri' => 'http://localhost/dcis/auth',
+          'redirect_uri' => 'http://localhost/DCIS/sso/auth',
           'audience' => 'https://ngthuc.auth0.com/userinfo',
           'responseType' => 'code',
           'scope' => 'openid email profile',
@@ -32,20 +32,32 @@ class SSO extends CI_Controller {
 
 		public function index()
 		{
-        $this->_data['subview'] = 'alert/load_alert_view';
-        $this->_data['titlePage'] = 'Xác thực';
-        $this->_data['type'] = 'warning';
-        $this->_data['url'] = base_url();
-        $this->_data['content'] = 'Access Denied';
-        $this->load->view('main.php', $this->_data);
+        // $this->_data['subview'] = 'alert/load_alert_view';
+        // $this->_data['titlePage'] = 'Xác thực';
+        // $this->_data['type'] = 'warning';
+        // $this->_data['url'] = base_url();
+        // $this->_data['content'] = 'Access Denied';
+        // $this->load->view('main.php', $this->_data);
+        if(!isset($_SESSION['user'])) {
+          echo '<a href="http://localhost/DCIS/sso/login/">Login</a>';
+        } else {
+          echo '
+          Username: '.$_SESSION['user']['nickname'].'<br />
+          Name: '.$_SESSION['user']['name'].'<br />
+          <img src="'.$_SESSION['user']['picture'].'" width="150px" /><br />
+          Email: '.$_SESSION['user']['email'].'<br />
+          Last login: '.date($_SESSION['user']['updated_at']).'<br />
+          <a href="http://localhost/DCIS/sso/logout/">Logout</a>
+          ';
+        }
 		}
 
     public function auth(){
       $userInfo = $this->auth0->getUser();
-
+      // var_dump($userInfo);
       $this->session->set_userdata('user', $userInfo);
-      $this->session->set_userdata('access', 'admin');
-
+      $redirectTo = 'http://localhost/DCIS';
+      header('Location: ' . $redirectTo);
       // if (!$userInfo) {
       //     // We have no user info
       //     // redirect to Login
@@ -71,7 +83,7 @@ class SSO extends CI_Controller {
         $this->auth0->logout();
         $this->session->unset_userdata('user');	// Unset session of user
         $this->session->unset_userdata('access');	// Unset session of user
-        $logoutTo = 'http://localhost/dcis';
+        $logoutTo = 'http://localhost/DCIS';
         header('Location: ' . $logoutTo);
 		}
 }
